@@ -1,0 +1,29 @@
+{
+  "name": "soderlind/ps-decompose-word",
+  "description": "WordPress plugin that improves wrapping of long compound words with native hyphenation and optional render-time soft hyphen exceptions.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Per Soderlind"
+    }
+  ],
+  "require": {
+    "php": ">=8.3",
+    "ext-mbstring": "*",
+    "org_heigl/hyphenator": "^3.1",
+    "soderlind/wordpress-github-updater": "^2.0"
+  },
+  "scripts": {
+    "test": "pest"
+  },
+  "require-dev": {
+    "pestphp/pest": "^4.0",
+    "brain/monkey": "^2.7"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}

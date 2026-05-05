@@ -1,0 +1,99 @@
+=== PS Decompose Word ===
+Contributors: PerS
+Tags: hyphenation, soft hyphen, typography, compound words, wrapping
+Requires at least: 6.8
+Tested up to: 7.0
+Requires PHP: 8.3
+Stable tag: 0.1.9
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Improves text wrapping for long compound words in German, Norwegian, Swedish, Dutch, and other languages.
+
+== Description ==
+
+PS Decompose Word helps long compound words wrap gracefully instead of overflowing their containers.
+
+**How it works:**
+
+1. Enables native CSS hyphenation on frontend content.
+2. Inserts soft hyphens from your exception dictionary at render time.
+3. Falls back to TeX-pattern hyphenation for 30+ supported locales.
+
+**Safe by design:**
+
+* Never modifies saved post content.
+* Skips code, scripts, links, buttons, and other risky elements.
+* Server-inserted soft hyphens override browser automatic hyphenation.
+
+**Supported languages:**
+
+German, Norwegian (Bokmål/Nynorsk), Danish, Dutch, Swedish, Icelandic, English, Spanish, French, Italian, Portuguese, Polish, Czech, Slovak, Slovenian, Hungarian, and many more via TeX dictionaries.
+
+== Exception Dictionary ==
+
+Add entries under **Settings → PS Decompose Word → Exception dictionary**.
+
+**Explicit mapping:**
+
+`Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft`
+
+**Shorthand (hyphenated word is both key and replacement):**
+
+`digitaliserings-organisasjon`
+
+**Locale-prefixed:**
+
+`nb_NO:menneske-rettighets-organisasjon`
+
+Hyphens in the replacement mark where soft hyphens will be inserted.
+
+== Installation ==
+
+1. Upload the plugin folder to `/wp-content/plugins/`.
+2. Activate **PS Decompose Word**.
+3. Configure under **Settings → PS Decompose Word**.
+
+== Frequently Asked Questions ==
+
+= Does this modify my saved content? =
+
+No. Soft hyphens are inserted at render time only.
+
+= Which block types are processed? =
+
+By default: post titles, headings, paragraphs, lists, quotes, tables, and common layout blocks. You can customize this in settings.
+
+= How do I add exceptions for a specific language? =
+
+Prefix the entry with a locale code: `nb_NO:my-hyphen-ated-word`
+
+= Does this plugin update automatically? =
+
+Yes. When installed via Composer or with the vendor folder included, the plugin checks GitHub for new releases and offers updates through the standard WordPress plugin update mechanism.
+
+== Changelog ==
+
+= 0.1.9 =
+* Improved render-time performance with request-local option caches, cheaper cache keys, and a DOM preflight for short content.
+
+= 0.1.8 =
+* Server-inserted soft hyphens now take priority over browser automatic hyphenation.
+
+= 0.1.7 =
+* Removed editor preview feature.
+
+= 0.1.4 =
+* Added TeX-pattern hyphenation fallback for 30+ locales.
+
+= 0.1.3 =
+* Added common block types preset.
+
+= 0.1.2 =
+* Case-insensitive exception matching with case-preserving output.
+
+= 0.1.1 =
+* Fixed block theme title wrapping and locale-prefixed shorthand exceptions.
+
+= 0.1.0 =
+* Initial release.
