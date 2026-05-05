@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PS Decompose Word
  * Description: Improves wrapping of long compound words with native hyphenation and optional render-time soft hyphen exceptions.
- * Version: 0.1.9
+ * Version: 1.0.0
  * Requires at least: 6.8
  * Requires PHP: 8.3
  * Author: Per Soderlind
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'PS_DECOMPOSE_WORD_VERSION', '0.1.9' );
+define( 'PS_DECOMPOSE_WORD_VERSION', '1.0.0' );
 define( 'PS_DECOMPOSE_WORD_FILE', __FILE__ );
 define( 'PS_DECOMPOSE_WORD_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PS_DECOMPOSE_WORD_URL', plugin_dir_url( __FILE__ ) );

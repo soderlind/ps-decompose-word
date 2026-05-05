@@ -2,6 +2,10 @@
 
 All notable changes to PS Decompose Word are documented in this file.
 
+## 1.0.0
+
+- First stable release.
+
 ## 0.1.9
 
 - Improved render-time performance with request-local option caches, cheaper cache keys, and a DOM preflight for short content.
