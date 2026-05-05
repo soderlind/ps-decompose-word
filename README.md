@@ -19,17 +19,20 @@ WordPress plugin that improves text wrapping for long compound words in language
 
 ## Installation
 
+1. Download [`ps-decompose-word.zip`](https://github.com/soderlind/ps-decompose-word/releases/latest/download/ps-decompose-word.zip)
+2. Upload via  `Plugins → Add New → Upload Plugin`
+3. Activate via `WordPress Admin → Plugins`
+4. Configure exceptions via `Settings → PS Decompose Word`
+
+Plugin [updates are handled automatically](https://github.com/soderlind/wordpress-plugin-github-updater#readme) via GitHub. No need to manually download and install updates.
+
+
 **Composer:**
 
 ```bash
 composer require soderlind/ps-decompose-word
 ```
 
-**Manual:**
-
-1. Upload the plugin folder to `/wp-content/plugins/`.
-2. Activate **PS Decompose Word**.
-3. Configure under **Settings → PS Decompose Word**.
 
 ## Exception Dictionary
 
