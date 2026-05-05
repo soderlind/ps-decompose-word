@@ -2,10 +2,10 @@
 /**
  * Soft hyphen exception engine.
  *
- * @package PS_Decompose_Word
+ * @package PS_Hyphenate
  */
 
-namespace PS_Decompose_Word;
+namespace PS_Hyphenate;
 
 use Org\Heigl\Hyphenator\Hyphenator as Tex_Hyphenator;
 
@@ -114,7 +114,7 @@ final class Hyphenator {
 		 * @param string $word Original word.
 		 * @param string $locale Normalized locale.
 		 */
-		return (string) \apply_filters( 'ps_decompose_word_hyphenated_word', $hyphenated, $word, $locale );
+		return (string) \apply_filters( 'ps_hyphenate_hyphenated_word', $hyphenated, $word, $locale );
 	}
 
 	/**

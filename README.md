@@ -1,4 +1,4 @@
-# PS Decompose Word
+# PS Hyphenate
 
 WordPress plugin that improves text wrapping for long compound words in languages like German, Norwegian, Swedish, and Dutch.
 
@@ -19,10 +19,10 @@ WordPress plugin that improves text wrapping for long compound words in language
 
 ## Installation
 
-1. Download [`ps-decompose-word.zip`](https://github.com/soderlind/ps-decompose-word/releases/latest/download/ps-decompose-word.zip)
+1. Download [`ps-hyphenate.zip`](https://github.com/soderlind/ps-decompose-word/releases/latest/download/ps-hyphenate.zip)
 2. Upload via  `Plugins → Add New → Upload Plugin`
 3. Activate via `WordPress Admin → Plugins`
-4. Configure exceptions via `Settings → PS Decompose Word`
+4. Configure exceptions via `Settings → PS Hyphenate`
 
 Plugin [updates are handled automatically](https://github.com/soderlind/wordpress-plugin-github-updater#readme) via GitHub. No need to manually download and install updates.
 
@@ -30,13 +30,13 @@ Plugin [updates are handled automatically](https://github.com/soderlind/wordpres
 **Composer:**
 
 ```bash
-composer require soderlind/ps-decompose-word
+composer require soderlind/ps-hyphenate
 ```
 
 
 ## Exception Dictionary
 
-Add entries in **Settings → PS Decompose Word → Exception dictionary**.
+Add entries in **Settings → PS Hyphenate → Exception dictionary**.
 
 | Format | Example |
 |--------|--------|
@@ -63,10 +63,10 @@ Tests use [Pest](https://pestphp.com/) with [Brain Monkey](https://brain-wp.gith
 
 ### Releasing
 
-1. Update version in `ps-decompose-word.php` and `readme.txt`.
+1. Update version in `ps-hyphenate.php` and `readme.txt`.
 2. Update `CHANGELOG.md`.
-3. Create a GitHub release with a tag (e.g., `0.1.9`).
-4. The workflow automatically builds and attaches `ps-decompose-word.zip`.
+3. Create a GitHub release with a tag (e.g., `1.0.1`).
+4. The workflow automatically builds and attaches `ps-hyphenate.zip`.
 
 ## License
 

@@ -2,10 +2,10 @@
 /**
  * Frontend render filters.
  *
- * @package PS_Decompose_Word
+ * @package PS_Hyphenate
  */
 
-namespace PS_Decompose_Word;
+namespace PS_Hyphenate;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -125,10 +125,10 @@ final class Render_Filter {
 		$options = $this->settings->get_options();
 
 		if ( ! empty( $options['enabled'] ) && is_array( $classes ) ) {
-			$classes[] = 'ps-decompose-word';
+			$classes[] = 'ps-hyphenate';
 
 			if ( ! empty( $options['server_enabled'] ) ) {
-				$classes[] = 'ps-decompose-word-server-enabled';
+				$classes[] = 'ps-hyphenate-server-enabled';
 			}
 		}
 
@@ -145,10 +145,10 @@ final class Render_Filter {
 		$options = $this->settings->get_options();
 
 		if ( ! empty( $options['enabled'] ) && is_array( $classes ) ) {
-			$classes[] = 'ps-decompose-word-enabled';
+			$classes[] = 'ps-hyphenate-enabled';
 
 			if ( ! empty( $options['server_enabled'] ) ) {
-				$classes[] = 'ps-decompose-word-server-enabled';
+				$classes[] = 'ps-hyphenate-server-enabled';
 			}
 		}
 
@@ -228,13 +228,13 @@ final class Render_Filter {
 	 */
 	private function process_with_cache( $html, $locale ) {
 		$options    = $this->settings->get_options();
-		$cache_key  = 'render_' . md5( PS_DECOMPOSE_WORD_VERSION . "\0" . $locale . "\0" . $options['min_word_length'] . "\0" . $options['exceptions'] . "\0" . $html );
+		$cache_key  = 'render_' . md5( PS_HYPHENATE_VERSION . "\0" . $locale . "\0" . $options['min_word_length'] . "\0" . $options['exceptions'] . "\0" . $html );
 
 		if ( isset( $this->runtime_cache[ $cache_key ] ) ) {
 			return $this->runtime_cache[ $cache_key ];
 		}
 
-		$cached     = wp_cache_get( $cache_key, 'ps_decompose_word' );
+		$cached     = wp_cache_get( $cache_key, 'ps_hyphenate' );
 
 		if ( false !== $cached ) {
 			$this->runtime_cache[ $cache_key ] = (string) $cached;
@@ -245,7 +245,7 @@ final class Render_Filter {
 		$processed = $this->html_processor->process( $html, $locale );
 		$this->runtime_cache[ $cache_key ] = $processed;
 
-		wp_cache_set( $cache_key, $processed, 'ps_decompose_word', HOUR_IN_SECONDS );
+		wp_cache_set( $cache_key, $processed, 'ps_hyphenate', HOUR_IN_SECONDS );
 
 		return $processed;
 	}

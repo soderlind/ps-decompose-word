@@ -1,5 +1,5 @@
 {
-  "name": "soderlind/ps-decompose-word",
+  "name": "soderlind/ps-hyphenate",
   "description": "WordPress plugin that improves wrapping of long compound words with native hyphenation and optional render-time soft hyphen exceptions.",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",

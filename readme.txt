@@ -1,4 +1,4 @@
-=== PS Decompose Word ===
+=== PS Hyphenate ===
 Contributors: PerS
 Tags: hyphenation, soft hyphen, typography, compound words, wrapping
 Requires at least: 6.8
@@ -12,7 +12,7 @@ Improves text wrapping for long compound words in German, Norwegian, Swedish, Du
 
 == Description ==
 
-PS Decompose Word helps long compound words wrap gracefully instead of overflowing their containers.
+PS Hyphenate helps long compound words wrap gracefully instead of overflowing their containers.
 
 **How it works:**
 
@@ -32,7 +32,7 @@ German, Norwegian (Bokmål/Nynorsk), Danish, Dutch, Swedish, Icelandic, English,
 
 == Exception Dictionary ==
 
-Add entries under **Settings → PS Decompose Word → Exception dictionary**.
+Add entries under **Settings → PS Hyphenate → Exception dictionary**.
 
 **Explicit mapping:**
 
@@ -51,8 +51,8 @@ Hyphens in the replacement mark where soft hyphens will be inserted.
 == Installation ==
 
 1. Upload the plugin folder to `/wp-content/plugins/`.
-2. Activate **PS Decompose Word**.
-3. Configure under **Settings → PS Decompose Word**.
+2. Activate **PS Hyphenate**.
+3. Configure under **Settings → PS Hyphenate**.
 
 == Frequently Asked Questions ==
 

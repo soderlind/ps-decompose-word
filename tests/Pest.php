@@ -12,14 +12,14 @@ require_once dirname( __DIR__ ) . '/includes/class-render-filter.php';
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 
-$GLOBALS['ps_decompose_word_test_options'] = array();
+$GLOBALS['ps_hyphenate_test_options'] = array();
 
-function ps_decompose_word_register_wordpress_mocks(): void {
+function ps_hyphenate_register_wordpress_mocks(): void {
 	Monkey\setUp();
 
 	$get_option = static function ( $name, $default = false ) {
-		$options = isset( $GLOBALS['ps_decompose_word_test_options'] ) && is_array( $GLOBALS['ps_decompose_word_test_options'] )
-			? $GLOBALS['ps_decompose_word_test_options']
+		$options = isset( $GLOBALS['ps_hyphenate_test_options'] ) && is_array( $GLOBALS['ps_hyphenate_test_options'] )
+			? $GLOBALS['ps_hyphenate_test_options']
 			: array();
 
 		return array_key_exists( $name, $options ) ? $options[ $name ] : $default;
@@ -59,15 +59,21 @@ function ps_decompose_word_register_wordpress_mocks(): void {
 	);
 }
 
-ps_decompose_word_register_wordpress_mocks();
+ps_hyphenate_register_wordpress_mocks();
 
-function ps_decompose_word_set_test_options( array $options ): void {
-	$GLOBALS['ps_decompose_word_test_options'] = array(
-		PS_Decompose_Word\Settings::OPTION_NAME => $options,
+function ps_hyphenate_set_test_options( array $options ): void {
+	$GLOBALS['ps_hyphenate_test_options'] = array(
+		PS_Hyphenate\Settings::OPTION_NAME => $options,
 	);
 }
 
-function ps_decompose_word_default_test_options(): array {
+function ps_hyphenate_set_legacy_test_options( array $options ): void {
+	$GLOBALS['ps_hyphenate_test_options'] = array(
+		PS_Hyphenate\Settings::LEGACY_OPTION_NAME => $options,
+	);
+}
+
+function ps_hyphenate_default_test_options(): array {
 	return array(
 		'enabled'         => 1,
 		'server_enabled'  => 1,
@@ -79,31 +85,31 @@ function ps_decompose_word_default_test_options(): array {
 	);
 }
 
-function ps_decompose_word_soft_hyphens_visible( string $value ): string {
+function ps_hyphenate_soft_hyphens_visible( string $value ): string {
 	return str_replace( "\xC2\xAD", '|', $value );
 }
 
-function ps_decompose_word_make_hyphenator( ?array $options = null ): PS_Decompose_Word\Hyphenator {
-	ps_decompose_word_set_test_options( $options ?? ps_decompose_word_default_test_options() );
+function ps_hyphenate_make_hyphenator( ?array $options = null ): PS_Hyphenate\Hyphenator {
+	ps_hyphenate_set_test_options( $options ?? ps_hyphenate_default_test_options() );
 
-	return new PS_Decompose_Word\Hyphenator( new PS_Decompose_Word\Settings() );
+	return new PS_Hyphenate\Hyphenator( new PS_Hyphenate\Settings() );
 }
 
-function ps_decompose_word_make_html_processor( ?array $options = null ): PS_Decompose_Word\HTML_Processor {
-	ps_decompose_word_set_test_options( $options ?? ps_decompose_word_default_test_options() );
+function ps_hyphenate_make_html_processor( ?array $options = null ): PS_Hyphenate\HTML_Processor {
+	ps_hyphenate_set_test_options( $options ?? ps_hyphenate_default_test_options() );
 
-	$settings   = new PS_Decompose_Word\Settings();
-	$hyphenator = new PS_Decompose_Word\Hyphenator( $settings );
+	$settings   = new PS_Hyphenate\Settings();
+	$hyphenator = new PS_Hyphenate\Hyphenator( $settings );
 
-	return new PS_Decompose_Word\HTML_Processor( $hyphenator, $settings );
+	return new PS_Hyphenate\HTML_Processor( $hyphenator, $settings );
 }
 
-function ps_decompose_word_make_render_filter( ?array $options = null ): PS_Decompose_Word\Render_Filter {
-	ps_decompose_word_set_test_options( $options ?? ps_decompose_word_default_test_options() );
+function ps_hyphenate_make_render_filter( ?array $options = null ): PS_Hyphenate\Render_Filter {
+	ps_hyphenate_set_test_options( $options ?? ps_hyphenate_default_test_options() );
 
-	$settings       = new PS_Decompose_Word\Settings();
-	$hyphenator     = new PS_Decompose_Word\Hyphenator( $settings );
-	$html_processor = new PS_Decompose_Word\HTML_Processor( $hyphenator, $settings );
+	$settings       = new PS_Hyphenate\Settings();
+	$hyphenator     = new PS_Hyphenate\Hyphenator( $settings );
+	$html_processor = new PS_Hyphenate\HTML_Processor( $hyphenator, $settings );
 
-	return new PS_Decompose_Word\Render_Filter( $html_processor, $settings );
+	return new PS_Hyphenate\Render_Filter( $html_processor, $settings );
 }

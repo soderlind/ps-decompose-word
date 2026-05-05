@@ -1,28 +1,28 @@
-.ps-decompose-word-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-list),
-.ps-decompose-word,
-.ps-decompose-word .entry-content,
-.ps-decompose-word .wp-block-paragraph,
-.ps-decompose-word .wp-block-heading,
-.ps-decompose-word .wp-block-list {
+.ps-hyphenate-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-list),
+.ps-hyphenate,
+.ps-hyphenate .entry-content,
+.ps-hyphenate .wp-block-paragraph,
+.ps-hyphenate .wp-block-heading,
+.ps-hyphenate .wp-block-list {
 	hyphens: auto;
 	overflow-wrap: break-word;
 }
 
-.ps-decompose-word-server-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-list),
-.ps-decompose-word-server-enabled .ps-decompose-word,
-.ps-decompose-word-server-enabled .entry-content,
-.ps-decompose-word-server-enabled .wp-block-paragraph,
-.ps-decompose-word-server-enabled .wp-block-heading,
-.ps-decompose-word-server-enabled .wp-block-list,
-.ps-decompose-word.ps-decompose-word-server-enabled {
+.ps-hyphenate-server-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-list),
+.ps-hyphenate-server-enabled .ps-hyphenate,
+.ps-hyphenate-server-enabled .entry-content,
+.ps-hyphenate-server-enabled .wp-block-paragraph,
+.ps-hyphenate-server-enabled .wp-block-heading,
+.ps-hyphenate-server-enabled .wp-block-list,
+.ps-hyphenate.ps-hyphenate-server-enabled {
 	hyphens: manual;
 	word-break: normal;
 }
 
-.ps-decompose-word-enabled :where(a, button, code, kbd, pre, samp),
-.ps-decompose-word code,
-.ps-decompose-word kbd,
-.ps-decompose-word pre,
-.ps-decompose-word samp {
+.ps-hyphenate-enabled :where(a, button, code, kbd, pre, samp),
+.ps-hyphenate code,
+.ps-hyphenate kbd,
+.ps-hyphenate pre,
+.ps-hyphenate samp {
 	hyphens: manual;
 }

@@ -2,17 +2,18 @@
 /**
  * Plugin settings.
  *
- * @package PS_Decompose_Word
+ * @package PS_Hyphenate
  */
 
-namespace PS_Decompose_Word;
+namespace PS_Hyphenate;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 final class Settings {
-	const OPTION_NAME = 'ps_decompose_word_settings';
+	const OPTION_NAME = 'ps_hyphenate_settings';
+	const LEGACY_OPTION_NAME = 'ps_decompose_word_settings';
 
 	/**
 	 * Request-local defaults cache.
@@ -97,6 +98,10 @@ final class Settings {
 
 		$options = \get_option( self::OPTION_NAME, array() );
 
+		if ( empty( $options ) ) {
+			$options = \get_option( self::LEGACY_OPTION_NAME, array() );
+		}
+
 		if ( ! is_array( $options ) ) {
 			$options = array();
 		}
@@ -113,7 +118,7 @@ final class Settings {
 	 */
 	public function register_settings() {
 		register_setting(
-			'ps_decompose_word',
+			'ps_hyphenate',
 			self::OPTION_NAME,
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_options' ),
@@ -121,18 +126,18 @@ final class Settings {
 		);
 
 		add_settings_section(
-			'ps_decompose_word_main',
-			__( 'Hyphenation', 'ps-decompose-word' ),
+			'ps_hyphenate_main',
+			__( 'Hyphenation', 'ps-hyphenate' ),
 			'__return_false',
-			'ps-decompose-word'
+			'ps-hyphenate'
 		);
 
-		add_settings_field( 'enabled', __( 'CSS hyphenation', 'ps-decompose-word' ), array( $this, 'render_enabled_field' ), 'ps-decompose-word', 'ps_decompose_word_main' );
-		add_settings_field( 'server_enabled', __( 'Soft hyphen exceptions', 'ps-decompose-word' ), array( $this, 'render_server_enabled_field' ), 'ps-decompose-word', 'ps_decompose_word_main' );
-		add_settings_field( 'pattern_enabled', __( 'TeX pattern hyphenation', 'ps-decompose-word' ), array( $this, 'render_pattern_enabled_field' ), 'ps-decompose-word', 'ps_decompose_word_main' );
-		add_settings_field( 'min_word_length', __( 'Minimum word length', 'ps-decompose-word' ), array( $this, 'render_min_word_length_field' ), 'ps-decompose-word', 'ps_decompose_word_main' );
-		add_settings_field( 'block_types', __( 'Block types', 'ps-decompose-word' ), array( $this, 'render_block_types_field' ), 'ps-decompose-word', 'ps_decompose_word_main' );
-		add_settings_field( 'exceptions', __( 'Exception dictionary', 'ps-decompose-word' ), array( $this, 'render_exceptions_field' ), 'ps-decompose-word', 'ps_decompose_word_main' );
+		add_settings_field( 'enabled', __( 'CSS hyphenation', 'ps-hyphenate' ), array( $this, 'render_enabled_field' ), 'ps-hyphenate', 'ps_hyphenate_main' );
+		add_settings_field( 'server_enabled', __( 'Soft hyphen exceptions', 'ps-hyphenate' ), array( $this, 'render_server_enabled_field' ), 'ps-hyphenate', 'ps_hyphenate_main' );
+		add_settings_field( 'pattern_enabled', __( 'TeX pattern hyphenation', 'ps-hyphenate' ), array( $this, 'render_pattern_enabled_field' ), 'ps-hyphenate', 'ps_hyphenate_main' );
+		add_settings_field( 'min_word_length', __( 'Minimum word length', 'ps-hyphenate' ), array( $this, 'render_min_word_length_field' ), 'ps-hyphenate', 'ps_hyphenate_main' );
+		add_settings_field( 'block_types', __( 'Block types', 'ps-hyphenate' ), array( $this, 'render_block_types_field' ), 'ps-hyphenate', 'ps_hyphenate_main' );
+		add_settings_field( 'exceptions', __( 'Exception dictionary', 'ps-hyphenate' ), array( $this, 'render_exceptions_field' ), 'ps-hyphenate', 'ps_hyphenate_main' );
 	}
 
 	/**
@@ -142,10 +147,10 @@ final class Settings {
 	 */
 	public function add_options_page() {
 		add_options_page(
-			__( 'PS Decompose Word', 'ps-decompose-word' ),
-			__( 'PS Decompose Word', 'ps-decompose-word' ),
+			__( 'PS Hyphenate', 'ps-hyphenate' ),
+			__( 'PS Hyphenate', 'ps-hyphenate' ),
 			'manage_options',
-			'ps-decompose-word',
+			'ps-hyphenate',
 			array( $this, 'render_page' )
 		);
 	}
@@ -204,11 +209,11 @@ final class Settings {
 		}
 		?>
 		<div class="wrap">
-			<h1><?php echo esc_html__( 'PS Decompose Word', 'ps-decompose-word' ); ?></h1>
+			<h1><?php echo esc_html__( 'PS Hyphenate', 'ps-hyphenate' ); ?></h1>
 			<form method="post" action="options.php">
 				<?php
-				settings_fields( 'ps_decompose_word' );
-				do_settings_sections( 'ps-decompose-word' );
+				settings_fields( 'ps_hyphenate' );
+				do_settings_sections( 'ps-hyphenate' );
 				submit_button();
 				?>
 			</form>
@@ -226,7 +231,7 @@ final class Settings {
 		?>
 		<label>
 			<input type="checkbox" name="<?php echo esc_attr( self::OPTION_NAME ); ?>[enabled]" value="1" <?php checked( 1, $options['enabled'] ); ?> />
-			<?php echo esc_html__( 'Apply native CSS hyphenation to frontend content.', 'ps-decompose-word' ); ?>
+			<?php echo esc_html__( 'Apply native CSS hyphenation to frontend content.', 'ps-hyphenate' ); ?>
 		</label>
 		<?php
 	}
@@ -241,7 +246,7 @@ final class Settings {
 		?>
 		<label>
 			<input type="checkbox" name="<?php echo esc_attr( self::OPTION_NAME ); ?>[server_enabled]" value="1" <?php checked( 1, $options['server_enabled'] ); ?> />
-			<?php echo esc_html__( 'Insert soft hyphens at render time.', 'ps-decompose-word' ); ?>
+			<?php echo esc_html__( 'Insert soft hyphens at render time.', 'ps-hyphenate' ); ?>
 		</label>
 		<?php
 	}
@@ -256,7 +261,7 @@ final class Settings {
 		?>
 		<label>
 			<input type="checkbox" name="<?php echo esc_attr( self::OPTION_NAME ); ?>[pattern_enabled]" value="1" <?php checked( 1, $options['pattern_enabled'] ); ?> />
-			<?php echo esc_html__( 'Use TeX hyphenation dictionaries after explicit exceptions.', 'ps-decompose-word' ); ?>
+			<?php echo esc_html__( 'Use TeX hyphenation dictionaries after explicit exceptions.', 'ps-hyphenate' ); ?>
 		</label>
 		<?php
 	}
@@ -283,7 +288,7 @@ final class Settings {
 		$value   = implode( "\n", (array) $options['block_types'] );
 		?>
 		<textarea name="<?php echo esc_attr( self::OPTION_NAME ); ?>[block_types]" rows="10" cols="48" class="large-text code"><?php echo esc_textarea( $value ); ?></textarea>
-		<p class="description"><?php echo esc_html__( 'One block type per line. Common prose, title, list, quote, table, and layout blocks are prefilled. Classic content is handled separately by the_content.', 'ps-decompose-word' ); ?></p>
+		<p class="description"><?php echo esc_html__( 'One block type per line. Common prose, title, list, quote, table, and layout blocks are prefilled. Classic content is handled separately by the_content.', 'ps-hyphenate' ); ?></p>
 		<?php
 	}
 
@@ -296,7 +301,7 @@ final class Settings {
 		$options = $this->get_options();
 		?>
 		<textarea name="<?php echo esc_attr( self::OPTION_NAME ); ?>[exceptions]" rows="10" cols="72" class="large-text code" placeholder="Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft&#10;nb_NO:menneskerettighetsorganisasjon=menneske-rettighets-organisasjon"><?php echo esc_textarea( (string) $options['exceptions'] ); ?></textarea>
-		<p class="description"><?php echo esc_html__( 'Use hyphens in replacements to mark soft hyphen positions. Prefix with locale and a colon for locale-specific entries.', 'ps-decompose-word' ); ?></p>
+		<p class="description"><?php echo esc_html__( 'Use hyphens in replacements to mark soft hyphen positions. Prefix with locale and a colon for locale-specific entries.', 'ps-hyphenate' ); ?></p>
 		<?php
 	}
 

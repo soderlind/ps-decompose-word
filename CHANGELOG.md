@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to PS Decompose Word are documented in this file.
+All notable changes to PS Hyphenate are documented in this file.
 
 ## 1.0.0
 

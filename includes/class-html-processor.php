@@ -2,10 +2,10 @@
 /**
  * Safe HTML text-node processor.
  *
- * @package PS_Decompose_Word
+ * @package PS_Hyphenate
  */
 
-namespace PS_Decompose_Word;
+namespace PS_Hyphenate;
 
 use DOMDocument;
 use DOMElement;
@@ -70,7 +70,7 @@ final class HTML_Processor {
 
 		$document = new DOMDocument( '1.0', 'UTF-8' );
 		$previous = libxml_use_internal_errors( true );
-		$wrapped  = '<div id="ps-decompose-word-root">' . $html . '</div>';
+		$wrapped  = '<div id="ps-hyphenate-root">' . $html . '</div>';
 		$loaded   = $document->loadHTML( '<?xml encoding="UTF-8">' . $wrapped, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 
 		libxml_clear_errors();
@@ -80,7 +80,7 @@ final class HTML_Processor {
 			return $html;
 		}
 
-		$root = $document->getElementById( 'ps-decompose-word-root' );
+		$root = $document->getElementById( 'ps-hyphenate-root' );
 
 		if ( ! $root instanceof DOMElement ) {
 			return $html;
@@ -138,7 +138,7 @@ final class HTML_Processor {
 			return true;
 		}
 
-		if ( $element->hasAttribute( 'data-ps-decompose-word-skip' ) ) {
+		if ( $element->hasAttribute( 'data-ps-hyphenate-skip' ) ) {
 			return true;
 		}
 

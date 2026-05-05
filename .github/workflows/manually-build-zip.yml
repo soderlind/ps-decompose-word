@@ -14,7 +14,7 @@ jobs:
     name: Build release zip
     runs-on: ubuntu-latest
     env:
-      PLUGIN_ZIP: ps-decompose-word.zip
+      PLUGIN_ZIP: ps-hyphenate.zip
     permissions:
       contents: write
     steps:
@@ -26,17 +26,36 @@ jobs:
           composer install --no-dev --optimize-autoloader
 
       - name: Archive Release
-        uses: thedoctor0/zip-release@b57d897cb5d60cb78b51a507f63fa184cfe35554 #0.7.6
-        with:
-          type: 'zip'
-          filename: ${{ env.PLUGIN_ZIP }}
-          exclusions: >-
-            *.git* /*.github/* /*.vscode/* /*node_modules/* /*tests/* /*docs/*
-            composer.json composer.lock package.json package-lock.json
-            phpunit.xml phpunit.xml.dist phpcs.xml vitest.config.js i18n-map.json
-            .editorconfig .eslintignore .phpunit.result.cache .eslintrc.js .gitignore .gitattributes
-            *.log CHANGELOG.md README.md
-            !readme.txt !src/* !vendor/*
+        run: |
+          mkdir -p build/ps-hyphenate
+          rsync -a ./ build/ps-hyphenate/ \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.vscode' \
+            --exclude 'build' \
+            --exclude 'node_modules' \
+            --exclude 'tests' \
+            --exclude 'docs' \
+            --exclude 'composer.json' \
+            --exclude 'composer.lock' \
+            --exclude 'package.json' \
+            --exclude 'package-lock.json' \
+            --exclude 'phpunit.xml' \
+            --exclude 'phpunit.xml.dist' \
+            --exclude 'phpcs.xml' \
+            --exclude 'vitest.config.js' \
+            --exclude 'i18n-map.json' \
+            --exclude '.editorconfig' \
+            --exclude '.eslintignore' \
+            --exclude '.phpunit.result.cache' \
+            --exclude '.eslintrc.js' \
+            --exclude '.gitignore' \
+            --exclude '.gitattributes' \
+            --exclude '*.log' \
+            --exclude 'CHANGELOG.md' \
+            --exclude 'README.md'
+          cd build
+          zip -r "../$PLUGIN_ZIP" ps-hyphenate
 
       - name: Verify Archive Contents
         run: |
@@ -44,7 +63,7 @@ jobs:
           unzip -l "$PLUGIN_ZIP" || { echo "Failed to list zip contents"; exit 1; }
           echo "Total files: $(unzip -l "$PLUGIN_ZIP" | awk 'END{print $2}')"
 
-          if unzip -l "$PLUGIN_ZIP" | grep -q "vendor/yahnis-elsts/plugin-update-checker"; then
+          if unzip -l "$PLUGIN_ZIP" | grep -q "ps-hyphenate/vendor/yahnis-elsts/plugin-update-checker"; then
             echo "Plugin Update Checker is included"
           else
             echo "ERROR: Plugin Update Checker is missing from the release"

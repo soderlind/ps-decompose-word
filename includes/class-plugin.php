@@ -2,10 +2,10 @@
 /**
  * Main plugin coordinator.
  *
- * @package PS_Decompose_Word
+ * @package PS_Hyphenate
  */
 
-namespace PS_Decompose_Word;
+namespace PS_Hyphenate;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -78,10 +78,10 @@ final class Plugin {
 		}
 
 		wp_enqueue_style(
-			'ps-decompose-word',
-			PS_DECOMPOSE_WORD_URL . 'assets/frontend.css',
+			'ps-hyphenate',
+			PS_HYPHENATE_URL . 'assets/frontend.css',
 			array(),
-			PS_DECOMPOSE_WORD_VERSION
+			PS_HYPHENATE_VERSION
 		);
 	}
 }

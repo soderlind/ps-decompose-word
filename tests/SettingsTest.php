@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 it( 'keeps core hyphenation defaults enabled conservatively', function (): void {
-	$settings = new PS_Decompose_Word\Settings();
+	$settings = new PS_Hyphenate\Settings();
 	$defaults = $settings->get_defaults();
 
 	expect( $defaults['enabled'] )->toBe( 1 )
@@ -10,8 +10,19 @@ it( 'keeps core hyphenation defaults enabled conservatively', function (): void 
 		->and( $defaults['pattern_enabled'] )->toBe( 1 );
 } );
 
+it( 'reads legacy settings after the plugin rename', function (): void {
+	$options = ps_hyphenate_default_test_options();
+	$options['min_word_length'] = 18;
+
+	ps_hyphenate_set_legacy_test_options( $options );
+
+	$settings = new PS_Hyphenate\Settings();
+
+	expect( $settings->get_options()['min_word_length'] )->toBe( 18 );
+} );
+
 it( 'sanitizes core hyphenation toggles as booleans', function (): void {
-	$settings = new PS_Decompose_Word\Settings();
+	$settings = new PS_Hyphenate\Settings();
 
 	$enabled = $settings->sanitize_options(
 		array(
