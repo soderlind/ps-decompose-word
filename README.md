@@ -2,6 +2,9 @@
 
 WordPress plugin that improves text wrapping for long compound words in languages like German, Norwegian, Swedish, and Dutch.
 
+<img width="100%"  alt="Screenshot 2026-05-06 at 01 14 03" src="https://github.com/user-attachments/assets/98f1728d-2e67-4390-9a40-30792ec259bf" />
+
+
 ## Features
 
 - **CSS hyphenation** — Enables native browser hyphenation on frontend content.
