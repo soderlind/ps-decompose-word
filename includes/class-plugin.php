@@ -81,7 +81,7 @@ final class Plugin {
 			'ps-hyphenate',
 			PS_HYPHENATE_URL . 'assets/frontend.css',
 			array(),
-			PS_HYPHENATE_VERSION
+			\PS_HYPHENATE_VERSION
 		);
 	}
 }

@@ -57,11 +57,27 @@ final class Render_Filter {
 	 * @return void
 	 */
 	public function register() {
+		add_filter( 'the_title', array( $this, 'filter_title' ), 20, 2 );
 		add_filter( 'render_block_core/post-title', array( $this, 'filter_post_title_block' ), 20, 3 );
 		add_filter( 'render_block', array( $this, 'filter_block' ), 20, 2 );
 		add_filter( 'the_content', array( $this, 'filter_content' ), 20 );
 		add_filter( 'body_class', array( $this, 'add_body_class' ) );
 		add_filter( 'post_class', array( $this, 'add_post_class' ) );
+	}
+
+	/**
+	 * Filter classic theme titles.
+	 *
+	 * @param string $title Post title.
+	 * @param int    $post_id Post ID.
+	 * @return string
+	 */
+	public function filter_title( $title, $post_id = 0 ) {
+		if ( ! $this->should_process_server_side() || ! $this->is_main_frontend_content() ) {
+			return $title;
+		}
+
+		return $this->process_with_cache( $title, get_locale() );
 	}
 
 	/**
@@ -228,7 +244,7 @@ final class Render_Filter {
 	 */
 	private function process_with_cache( $html, $locale ) {
 		$options    = $this->settings->get_options();
-		$cache_key  = 'render_' . md5( PS_HYPHENATE_VERSION . "\0" . $locale . "\0" . $options['min_word_length'] . "\0" . $options['exceptions'] . "\0" . $html );
+		$cache_key  = 'render_' . md5( \PS_HYPHENATE_VERSION . "\0" . $locale . "\0" . $options['min_word_length'] . "\0" . $options['exceptions'] . "\0" . $html );
 
 		if ( isset( $this->runtime_cache[ $cache_key ] ) ) {
 			return $this->runtime_cache[ $cache_key ];
@@ -245,7 +261,7 @@ final class Render_Filter {
 		$processed = $this->html_processor->process( $html, $locale );
 		$this->runtime_cache[ $cache_key ] = $processed;
 
-		wp_cache_set( $cache_key, $processed, 'ps_hyphenate', HOUR_IN_SECONDS );
+		wp_cache_set( $cache_key, $processed, 'ps_hyphenate', \HOUR_IN_SECONDS );
 
 		return $processed;
 	}

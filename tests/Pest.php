@@ -3,6 +3,14 @@ declare(strict_types=1);
 
 define( 'ABSPATH', dirname( __DIR__ ) . '/' );
 
+if ( ! defined( 'PS_HYPHENATE_VERSION' ) ) {
+	define( 'PS_HYPHENATE_VERSION', '1.0.2' );
+}
+
+if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
+	define( 'HOUR_IN_SECONDS', 3600 );
+}
+
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once dirname( __DIR__ ) . '/includes/class-settings.php';
 require_once dirname( __DIR__ ) . '/includes/class-hyphenator.php';
@@ -44,6 +52,12 @@ function ps_hyphenate_register_wordpress_mocks(): void {
 	$sanitize_textarea_field = static function ( $value ) {
 		return is_string( $value ) ? trim( $value ) : '';
 	};
+	$wp_cache_get = static function () {
+		return false;
+	};
+	$wp_cache_set = static function () {
+		return true;
+	};
 
 	Functions\when( 'get_option' )->alias( $get_option );
 	Functions\when( 'wp_parse_args' )->alias( $wp_parse_args );
@@ -51,6 +65,15 @@ function ps_hyphenate_register_wordpress_mocks(): void {
 	Functions\when( 'apply_filters' )->alias( $apply_filters );
 	Functions\when( 'wp_unslash' )->alias( $wp_unslash );
 	Functions\when( 'sanitize_textarea_field' )->alias( $sanitize_textarea_field );
+	Functions\when( 'is_admin' )->justReturn( false );
+	Functions\when( 'wp_doing_ajax' )->justReturn( false );
+	Functions\when( 'wp_is_json_request' )->justReturn( false );
+	Functions\when( 'is_feed' )->justReturn( false );
+	Functions\when( 'in_the_loop' )->justReturn( true );
+	Functions\when( 'is_main_query' )->justReturn( true );
+	Functions\when( 'get_locale' )->justReturn( 'nb_NO' );
+	Functions\when( 'wp_cache_get' )->alias( $wp_cache_get );
+	Functions\when( 'wp_cache_set' )->alias( $wp_cache_set );
 
 	register_shutdown_function(
 		static function (): void {

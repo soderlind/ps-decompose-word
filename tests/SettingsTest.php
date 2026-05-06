@@ -49,3 +49,20 @@ it( 'sanitizes core hyphenation toggles as booleans', function (): void {
 		->and( $missing['server_enabled'] )->toBe( 0 )
 		->and( $missing['pattern_enabled'] )->toBe( 0 );
 } );
+
+it( 'keeps block type multi-select submissions as block type arrays', function (): void {
+	$settings = new PS_Hyphenate\Settings();
+
+	$sanitized = $settings->sanitize_options(
+		array(
+			'enabled'         => '1',
+			'server_enabled'  => '1',
+			'pattern_enabled' => '1',
+			'min_word_length' => '14',
+			'block_types'     => array( 'core/paragraph', 'core/heading', 'core/paragraph', 'acf/hero_block' ),
+		)
+	);
+
+	expect( $sanitized['block_types'] )->toBe( array( 'core/paragraph', 'core/heading', 'acf/hero_block' ) )
+		->and( $sanitized['block_types'] )->not->toContain( 'array' );
+} );

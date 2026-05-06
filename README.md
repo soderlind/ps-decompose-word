@@ -22,7 +22,7 @@ WordPress plugin that improves text wrapping for long compound words in language
 
 ## Installation
 
-1. Download [`ps-hyphenate.zip`](https://github.com/soderlind/ps-decompose-word/releases/latest/download/ps-hyphenate.zip)
+1. Download [`ps-hyphenate.zip`](https://github.com/soderlind/ps-hyphenate/releases/latest/download/ps-hyphenate.zip)
 2. Upload via  `Plugins → Add New → Upload Plugin`
 3. Activate via `WordPress Admin → Plugins`
 4. Configure exceptions via `Settings → PS Hyphenate`
@@ -51,7 +51,7 @@ Hyphens in the replacement mark soft hyphen positions.
 
 ## Automatic Updates
 
-This plugin supports automatic updates from GitHub releases via [soderlind/wordpress-github-updater](https://github.com/soderlind/wordpress-plugin-gitHub-updater).
+This plugin supports automatic updates from GitHub releases via [soderlind/wordpress-github-updater](https://github.com/soderlind/wordpress-plugin-github-updater).
 
 When a new release is published on GitHub, WordPress will detect and offer the update through the standard plugin update mechanism.
 

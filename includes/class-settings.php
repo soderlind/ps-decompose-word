@@ -60,6 +60,7 @@ final class Settings {
 		if ( is_admin() ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 			add_action( 'admin_menu', array( $this, 'add_options_page' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 		}
 	}
 
@@ -156,6 +157,48 @@ final class Settings {
 	}
 
 	/**
+	 * Enqueue settings-page assets.
+	 *
+	 * @param string $hook_suffix Current admin page hook suffix.
+	 * @return void
+	 */
+	public function enqueue_admin_assets( $hook_suffix ) {
+		if ( 'settings_page_ps-hyphenate' !== $hook_suffix ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'ps-hyphenate-select2',
+			\PS_HYPHENATE_URL . 'assets/vendor/select2/select2.min.css',
+			array(),
+			'4.1.0-rc.0'
+		);
+
+		wp_enqueue_style(
+			'ps-hyphenate-admin',
+			\PS_HYPHENATE_URL . 'assets/admin.css',
+			array( 'ps-hyphenate-select2' ),
+			\PS_HYPHENATE_VERSION
+		);
+
+		wp_enqueue_script(
+			'ps-hyphenate-select2',
+			\PS_HYPHENATE_URL . 'assets/vendor/select2/select2.min.js',
+			array( 'jquery' ),
+			'4.1.0-rc.0',
+			true
+		);
+
+		wp_enqueue_script(
+			'ps-hyphenate-admin',
+			\PS_HYPHENATE_URL . 'assets/admin.js',
+			array( 'jquery', 'ps-hyphenate-select2' ),
+			\PS_HYPHENATE_VERSION,
+			true
+		);
+	}
+
+	/**
 	 * Sanitize settings.
 	 *
 	 * @param array<string,mixed> $input Raw input.
@@ -165,8 +208,10 @@ final class Settings {
 		$defaults = $this->get_defaults();
 		$input    = is_array( $input ) ? $input : array();
 
-		$block_types = $this->parse_lines_or_csv( isset( $input['block_types'] ) ? (string) wp_unslash( $input['block_types'] ) : '' );
-		$block_types = array_filter( array_map( array( $this, 'sanitize_block_type' ), $block_types ) );
+		$block_type_input = isset( $input['block_types'] ) ? wp_unslash( $input['block_types'] ) : array();
+		$block_types      = $this->parse_block_type_input( $block_type_input );
+		$block_types      = array_filter( array_map( array( $this, 'sanitize_block_type' ), $block_types ) );
+		$block_types      = array_values( array_unique( $block_types ) );
 
 		$min_word_length = isset( $input['min_word_length'] ) ? \absint( $input['min_word_length'] ) : $defaults['min_word_length'];
 		$min_word_length = max( 6, min( 60, $min_word_length ) );
@@ -284,11 +329,18 @@ final class Settings {
 	 * @return void
 	 */
 	public function render_block_types_field() {
-		$options = $this->get_options();
-		$value   = implode( "\n", (array) $options['block_types'] );
+		$options     = $this->get_options();
+		$selected    = array_filter( array_map( array( $this, 'sanitize_block_type' ), (array) $options['block_types'] ) );
+		$block_types = array_values( array_unique( array_merge( self::COMMON_BLOCK_TYPES, $selected ) ) );
 		?>
-		<textarea name="<?php echo esc_attr( self::OPTION_NAME ); ?>[block_types]" rows="10" cols="48" class="large-text code"><?php echo esc_textarea( $value ); ?></textarea>
-		<p class="description"><?php echo esc_html__( 'One block type per line. Common prose, title, list, quote, table, and layout blocks are prefilled. Classic content is handled separately by the_content.', 'ps-hyphenate' ); ?></p>
+		<div class="ps-hyphenate-block-types-field">
+			<select name="<?php echo esc_attr( self::OPTION_NAME ); ?>[block_types][]" class="ps-hyphenate-block-types" multiple="multiple" data-placeholder="<?php echo esc_attr__( 'Choose or type block types', 'ps-hyphenate' ); ?>">
+				<?php foreach ( $block_types as $block_type ) : ?>
+					<option value="<?php echo esc_attr( $block_type ); ?>" <?php selected( in_array( $block_type, $selected, true ) ); ?>><?php echo esc_html( $block_type ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+		<p class="description"><?php echo esc_html__( 'Choose common blocks or type custom block names. Classic content is handled separately by the_content.', 'ps-hyphenate' ); ?></p>
 		<?php
 	}
 
@@ -303,6 +355,20 @@ final class Settings {
 		<textarea name="<?php echo esc_attr( self::OPTION_NAME ); ?>[exceptions]" rows="10" cols="72" class="large-text code" placeholder="Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft&#10;nb_NO:menneskerettighetsorganisasjon=menneske-rettighets-organisasjon"><?php echo esc_textarea( (string) $options['exceptions'] ); ?></textarea>
 		<p class="description"><?php echo esc_html__( 'Use hyphens in replacements to mark soft hyphen positions. Prefix with locale and a colon for locale-specific entries.', 'ps-hyphenate' ); ?></p>
 		<?php
+	}
+
+	/**
+	 * Parse comma- or line-separated values.
+	 *
+	 * @param string $value Raw value.
+	 * @return array<int,string>
+	 */
+	private function parse_block_type_input( $value ) {
+		if ( is_array( $value ) ) {
+			return array_filter( array_map( 'trim', array_map( 'strval', $value ) ) );
+		}
+
+		return $this->parse_lines_or_csv( (string) $value );
 	}
 
 	/**

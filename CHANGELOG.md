@@ -2,6 +2,11 @@
 
 All notable changes to PS Hyphenate are documented in this file.
 
+## 1.0.2
+
+- Fix runtime version metadata, updater repository URL, and classic theme title hyphenation.
+- Replace block type text input with a local Select2 multi-select and preserve array submissions.
+
 ## 1.0.1
 
 - Rename plugin to PS Hyphenate.
