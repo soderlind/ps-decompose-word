@@ -352,8 +352,8 @@ final class Settings {
 	public function render_exceptions_field() {
 		$options = $this->get_options();
 		?>
-		<textarea name="<?php echo esc_attr( self::OPTION_NAME ); ?>[exceptions]" rows="10" cols="72" class="large-text code" placeholder="Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft&#10;nb_NO:menneskerettighetsorganisasjon=menneske-rettighets-organisasjon"><?php echo esc_textarea( (string) $options['exceptions'] ); ?></textarea>
-		<p class="description"><?php echo esc_html__( 'Use hyphens in replacements to mark soft hyphen positions. Prefix with locale and a colon for locale-specific entries.', 'ps-hyphenate' ); ?></p>
+		<textarea name="<?php echo esc_attr( self::OPTION_NAME ); ?>[exceptions]" rows="10" cols="72" class="large-text code" placeholder="Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft&#10;nb_NO:personvernforordningen=per-son-vern--for-ord-nin-gen"><?php echo esc_textarea( (string) $options['exceptions'] ); ?></textarea>
+		<p class="description"><?php echo esc_html__( 'Use single hyphens for soft hyphen positions and double hyphens for a soft break before a visible compound hyphen. Prefix with locale and a colon for locale-specific entries.', 'ps-hyphenate' ); ?></p>
 		<?php
 	}
 

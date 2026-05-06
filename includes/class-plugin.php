@@ -73,7 +73,7 @@ final class Plugin {
 	public function enqueue_assets() {
 		$options = $this->settings->get_options();
 
-		if ( empty( $options['enabled'] ) ) {
+		if ( empty( $options['enabled'] ) && empty( $options['server_enabled'] ) ) {
 			return;
 		}
 

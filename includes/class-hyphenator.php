@@ -103,6 +103,7 @@ final class Hyphenator {
 		}
 
 		$hyphenated = null === $replacement ? $this->hyphenate_word_with_patterns( $word, $locale ) : $this->match_original_casing( $word, $replacement );
+		$hyphenated = $this->normalize_soft_hyphens( $hyphenated );
 
 		/**
 		 * Filters a hyphenated word before it is written to rendered HTML.
@@ -165,7 +166,7 @@ final class Hyphenator {
 			}
 
 			$word        = $this->normalize_word( $word );
-			$replacement = str_replace( '-', self::SOFT_HYPHEN, $replacement );
+			$replacement = $this->parse_exception_replacement( $replacement );
 
 			if ( '' === $word || '' === $replacement ) {
 				continue;
@@ -195,6 +196,23 @@ final class Hyphenator {
 		}
 
 		return strtolower( $word );
+	}
+
+	/**
+	 * Parse exception replacement syntax.
+	 *
+	 * Single hyphens mark soft hyphen positions. Double hyphens mark a soft
+	 * hyphen opportunity followed by a visible compound hyphen.
+	 *
+	 * @param string $replacement Replacement pattern.
+	 * @return string
+	 */
+	private function parse_exception_replacement( $replacement ) {
+		$visible_hyphen = "\0PS_HYPHENATE_VISIBLE_HYPHEN\0";
+		$replacement    = str_replace( '--', $visible_hyphen, $replacement );
+		$replacement    = str_replace( '-', self::SOFT_HYPHEN, $replacement );
+
+		return str_replace( $visible_hyphen, self::SOFT_HYPHEN . '-', $replacement );
 	}
 
 	/**
@@ -409,6 +427,19 @@ final class Hyphenator {
 		$first_replacement = function_exists( 'mb_strtoupper' ) ? mb_strtoupper( $first_replacement, 'UTF-8' ) : strtoupper( $first_replacement );
 
 		return $first_replacement . $rest;
+	}
+
+	/**
+	 * Collapse duplicate soft hyphen opportunities from pattern engines or input.
+	 *
+	 * @param string $value Hyphenated value.
+	 * @return string
+	 */
+	private function normalize_soft_hyphens( $value ) {
+		$soft_hyphen = preg_quote( self::SOFT_HYPHEN, '/' );
+		$normalized  = preg_replace( '/(?:' . $soft_hyphen . '){2,}/u', self::SOFT_HYPHEN, $value );
+
+		return is_string( $normalized ) ? $normalized : $value;
 	}
 
 	/**

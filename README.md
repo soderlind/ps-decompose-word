@@ -44,10 +44,11 @@ Add entries in **Settings → PS Hyphenate → Exception dictionary**.
 | Format | Example |
 |--------|--------|
 | Explicit | `Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft` |
+| Visible compound hyphen | `nb_NO:personvernforordningen=per-son-vern--for-ord-nin-gen` |
 | Shorthand | `digitaliserings-organisasjon` |
 | Locale-prefixed | `nb_NO:menneske-rettighets-organisasjon` |
 
-Hyphens in the replacement mark soft hyphen positions.
+Single hyphens in the replacement mark soft hyphen positions. Double hyphens mark a soft break before a visible compound hyphen.
 
 ## Automatic Updates
 

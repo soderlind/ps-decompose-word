@@ -14,6 +14,14 @@ it( 'keeps server mode at manual hyphenation without forcing ugly breaks', funct
 	$css = file_get_contents( dirname( __DIR__ ) . '/assets/frontend.css' );
 
 	expect( $css )->toMatch( '/\.ps-hyphenate-server-enabled\s+:where\([^}]+hyphens:\s*manual;/s' )
+		->and( $css )->toMatch( '/\.ps-hyphenate-server-enabled\s+:where\([^}]+overflow-wrap:\s*normal;/s' )
 		->and( $css )->toMatch( '/\.ps-hyphenate-server-enabled\s+:where\([^}]+word-break:\s*normal;/s' )
 		->and( $css )->not->toContain( 'overflow-wrap: anywhere' );
+} );
+
+it( 'prioritizes elements that actually contain inserted soft hyphens', function (): void {
+	$css = file_get_contents( dirname( __DIR__ ) . '/assets/frontend.css' );
+
+	expect( $css )->toContain( '.ps-hyphenate-server-enabled .ps-hyphenate-soft' )
+		->and( $css )->toContain( 'body.ps-hyphenate-server-enabled .ps-hyphenate-soft' );
 } );

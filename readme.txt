@@ -4,7 +4,7 @@ Tags: hyphenation, soft hyphen, typography, compound words, wrapping
 Requires at least: 6.8
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,10 @@ Add entries under **Settings → PS Hyphenate → Exception dictionary**.
 
 `Donaudampfschifffahrtsgesellschaft=Donau-dampf-schiff-fahrts-gesellschaft`
 
+Use double hyphens when a compound boundary should keep a visible hyphen:
+
+`nb_NO:personvernforordningen=per-son-vern--for-ord-nin-gen`
+
 **Shorthand (hyphenated word is both key and replacement):**
 
 `digitaliserings-organisasjon`
@@ -46,7 +50,7 @@ Add entries under **Settings → PS Hyphenate → Exception dictionary**.
 
 `nb_NO:menneske-rettighets-organisasjon`
 
-Hyphens in the replacement mark where soft hyphens will be inserted.
+Single hyphens in the replacement mark where soft hyphens will be inserted. Double hyphens mark a soft break before a visible compound hyphen.
 
 == Installation ==
 
@@ -73,6 +77,9 @@ Prefix the entry with a locale code: `nb_NO:my-hyphen-ated-word`
 Yes. When installed via Composer or with the vendor folder included, the plugin checks GitHub for new releases and offers updates through the standard WordPress plugin update mechanism.
 
 == Changelog ==
+
+= 1.0.4 =
+* Prioritize inserted soft hyphens by marking processed elements, allowing server mode without native CSS hyphenation, preserving visible compound hyphens from double hyphen exceptions, and normalizing duplicate soft hyphen opportunities.
 
 = 1.0.3 =
 * Apply frontend hyphenation CSS to paragraph elements inside block and post content.

@@ -140,8 +140,10 @@ final class Render_Filter {
 	public function add_post_class( $classes ) {
 		$options = $this->settings->get_options();
 
-		if ( ! empty( $options['enabled'] ) && is_array( $classes ) ) {
-			$classes[] = 'ps-hyphenate';
+		if ( is_array( $classes ) && ( ! empty( $options['enabled'] ) || ! empty( $options['server_enabled'] ) ) ) {
+			if ( ! empty( $options['enabled'] ) ) {
+				$classes[] = 'ps-hyphenate';
+			}
 
 			if ( ! empty( $options['server_enabled'] ) ) {
 				$classes[] = 'ps-hyphenate-server-enabled';
@@ -160,8 +162,10 @@ final class Render_Filter {
 	public function add_body_class( $classes ) {
 		$options = $this->settings->get_options();
 
-		if ( ! empty( $options['enabled'] ) && is_array( $classes ) ) {
-			$classes[] = 'ps-hyphenate-enabled';
+		if ( is_array( $classes ) && ( ! empty( $options['enabled'] ) || ! empty( $options['server_enabled'] ) ) ) {
+			if ( ! empty( $options['enabled'] ) ) {
+				$classes[] = 'ps-hyphenate-enabled';
+			}
 
 			if ( ! empty( $options['server_enabled'] ) ) {
 				$classes[] = 'ps-hyphenate-server-enabled';
@@ -183,7 +187,7 @@ final class Render_Filter {
 			return false;
 		}
 
-		return ! empty( $options['enabled'] ) && ! empty( $options['server_enabled'] );
+		return ! empty( $options['server_enabled'] );
 	}
 
 	/**

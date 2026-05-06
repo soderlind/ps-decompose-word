@@ -4,7 +4,11 @@ declare(strict_types=1);
 define( 'ABSPATH', dirname( __DIR__ ) . '/' );
 
 if ( ! defined( 'PS_HYPHENATE_VERSION' ) ) {
-	define( 'PS_HYPHENATE_VERSION', '1.0.3' );
+	define( 'PS_HYPHENATE_VERSION', '1.0.4' );
+}
+
+if ( ! defined( 'PS_HYPHENATE_URL' ) ) {
+	define( 'PS_HYPHENATE_URL', 'https://example.test/wp-content/plugins/ps-hyphenate/' );
 }
 
 if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
@@ -16,6 +20,7 @@ require_once dirname( __DIR__ ) . '/includes/class-settings.php';
 require_once dirname( __DIR__ ) . '/includes/class-hyphenator.php';
 require_once dirname( __DIR__ ) . '/includes/class-html-processor.php';
 require_once dirname( __DIR__ ) . '/includes/class-render-filter.php';
+require_once dirname( __DIR__ ) . '/includes/class-plugin.php';
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;

@@ -17,6 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class HTML_Processor {
+	const SOFT_HYPHEN_CLASS = 'ps-hyphenate-soft';
+
 	/**
 	 * Hyphenator service.
 	 *
@@ -102,27 +104,54 @@ final class HTML_Processor {
 	 *
 	 * @param DOMNode $node Current node.
 	 * @param string  $locale Locale.
-	 * @return void
+	 * @return bool Whether this node or a descendant received soft hyphens.
 	 */
 	private function walk( DOMNode $node, $locale ) {
 		if ( $node instanceof DOMText ) {
-			$node->nodeValue = $this->hyphenator->hyphenate_text( $node->nodeValue, $locale );
-			return;
+			$original        = $node->nodeValue;
+			$node->nodeValue = $this->hyphenator->hyphenate_text( $original, $locale );
+
+			return false !== strpos( $node->nodeValue, Hyphenator::SOFT_HYPHEN );
 		}
 
 		if ( $node instanceof DOMElement && $this->is_excluded_element( $node ) ) {
-			return;
+			return false;
 		}
 
 		$children = array();
+		$changed  = false;
 
 		foreach ( $node->childNodes as $child ) {
 			$children[] = $child;
 		}
 
 		foreach ( $children as $child ) {
-			$this->walk( $child, $locale );
+			$changed = $this->walk( $child, $locale ) || $changed;
 		}
+
+		if ( $changed && $node instanceof DOMElement && 'ps-hyphenate-root' !== $node->getAttribute( 'id' ) ) {
+			$this->add_soft_hyphen_class( $node );
+		}
+
+		return $changed;
+	}
+
+	/**
+	 * Mark an element that contains inserted soft hyphens.
+	 *
+	 * @param DOMElement $element Element to mark.
+	 * @return void
+	 */
+	private function add_soft_hyphen_class( DOMElement $element ) {
+		$classes = preg_split( '/\s+/', trim( $element->getAttribute( 'class' ) ) );
+		$classes = is_array( $classes ) ? array_filter( $classes ) : array();
+
+		if ( in_array( self::SOFT_HYPHEN_CLASS, $classes, true ) ) {
+			return;
+		}
+
+		$classes[] = self::SOFT_HYPHEN_CLASS;
+		$element->setAttribute( 'class', implode( ' ', $classes ) );
 	}
 
 	/**

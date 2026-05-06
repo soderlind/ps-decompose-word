@@ -14,8 +14,11 @@
 .ps-hyphenate-server-enabled .wp-block-paragraph,
 .ps-hyphenate-server-enabled .wp-block-heading,
 .ps-hyphenate-server-enabled .wp-block-list,
+.ps-hyphenate-server-enabled .ps-hyphenate-soft,
+body.ps-hyphenate-server-enabled .ps-hyphenate-soft,
 .ps-hyphenate.ps-hyphenate-server-enabled {
 	hyphens: manual;
+	overflow-wrap: normal;
 	word-break: normal;
 }
 
