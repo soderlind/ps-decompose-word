@@ -64,12 +64,6 @@ composer test
 
 Tests use [Pest](https://pestphp.com/) with [Brain Monkey](https://brain-wp.github.io/BrainMonkey/) for WordPress function mocks.
 
-### Releasing
-
-1. Update version in `ps-hyphenate.php` and `readme.txt`.
-2. Update `CHANGELOG.md`.
-3. Create a GitHub release with a tag (e.g., `1.0.1`).
-4. The workflow automatically builds and attaches `ps-hyphenate.zip`.
 
 ## License
 

@@ -2,6 +2,11 @@
 
 All notable changes to PS Hyphenate are documented in this file.
 
+## 1.0.1
+
+- Rename plugin to PS Hyphenate.
+- Update installation instructions in README.md for clarity and completeness.
+
 ## 1.0.0
 
 - First stable release.
