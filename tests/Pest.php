@@ -4,7 +4,7 @@ declare(strict_types=1);
 define( 'ABSPATH', dirname( __DIR__ ) . '/' );
 
 if ( ! defined( 'PS_HYPHENATE_VERSION' ) ) {
-	define( 'PS_HYPHENATE_VERSION', '1.0.2' );
+	define( 'PS_HYPHENATE_VERSION', '1.0.3' );
 }
 
 if ( ! defined( 'HOUR_IN_SECONDS' ) ) {

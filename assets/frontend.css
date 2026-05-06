@@ -1,4 +1,4 @@
-.ps-hyphenate-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-list, .entry-title, .page-title),
+.ps-hyphenate-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-post-content p, .entry-content p, .wp-block-list, .entry-title, .page-title),
 .ps-hyphenate,
 .ps-hyphenate .entry-content,
 .ps-hyphenate .wp-block-paragraph,
@@ -8,7 +8,7 @@
 	overflow-wrap: break-word;
 }
 
-.ps-hyphenate-server-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-list, .entry-title, .page-title),
+.ps-hyphenate-server-enabled :where(.wp-block-post-title, .wp-block-query-title, .wp-block-heading, .wp-block-paragraph, .wp-block-post-content p, .entry-content p, .wp-block-list, .entry-title, .page-title),
 .ps-hyphenate-server-enabled .ps-hyphenate,
 .ps-hyphenate-server-enabled .entry-content,
 .ps-hyphenate-server-enabled .wp-block-paragraph,

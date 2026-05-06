@@ -4,7 +4,7 @@ Tags: hyphenation, soft hyphen, typography, compound words, wrapping
 Requires at least: 6.8
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,9 @@ Prefix the entry with a locale code: `nb_NO:my-hyphen-ated-word`
 Yes. When installed via Composer or with the vendor folder included, the plugin checks GitHub for new releases and offers updates through the standard WordPress plugin update mechanism.
 
 == Changelog ==
+
+= 1.0.3 =
+* Apply frontend hyphenation CSS to paragraph elements inside block and post content.
 
 = 1.0.2 =
 * Fix runtime version metadata, updater repository URL, and classic theme title hyphenation.

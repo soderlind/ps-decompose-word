@@ -2,6 +2,10 @@
 
 All notable changes to PS Hyphenate are documented in this file.
 
+## 1.0.3
+
+- Apply frontend hyphenation CSS to paragraph elements inside block and post content.
+
 ## 1.0.2
 
 - Fix runtime version metadata, updater repository URL, and classic theme title hyphenation.
